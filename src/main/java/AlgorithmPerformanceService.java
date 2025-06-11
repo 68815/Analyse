@@ -189,6 +189,21 @@ public class AlgorithmPerformanceService {
             saveData(data);
         }
     }
+    
+    /**
+     * 根据id删除数据
+     * @param id 要删除的数据id
+     */
+    public void deleteById(UUID id) {
+        try (Connection connection = MySQLDatabaseConnection.getConnection()) {
+            String sql = "DELETE FROM algorithm_performance WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, id.toString());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            logger.error("删除数据失败: {}", e.getMessage());
+        }
+    }
 
     /**
      * <p>保存数据</p>
